@@ -1,0 +1,33 @@
+2018-03-29 13:22:55 Error: Call to undefined function sendMessageToUid() in D:\phpStudy\PHPTutorial\WWW\talkv\php\server.php:77
+Stack trace:
+#0 [internal function]: {closure}(Object(Workerman\Connection\TcpConnection), '{"type":"sendto...')
+#1 D:\phpStudy\PHPTutorial\WWW\talkv\php\workerman\Connection\TcpConnection.php(632): call_user_func(Object(Closure), Object(Workerman\Connection\TcpConnection), '{"type":"sendto...')
+#2 [internal function]: Workerman\Connection\TcpConnection->baseRead(Resource id #29)
+#3 D:\phpStudy\PHPTutorial\WWW\talkv\php\workerman\Events\Select.php(286): call_user_func_array(Array, Array)
+#4 D:\phpStudy\PHPTutorial\WWW\talkv\php\workerman\Worker.php(856): Workerman\Events\Select->loop()
+#5 D:\phpStudy\PHPTutorial\WWW\talkv\php\workerman\Worker.php(473): Workerman\Worker->run()
+#6 D:\phpStudy\PHPTutorial\WWW\talkv\php\workerman\Worker.php(382): Workerman\Worker::runAllWorkers()
+#7 D:\phpStudy\PHPTutorial\WWW\talkv\php\server.php(132): Workerman\Worker::runAll()
+#8 {main}
+2018-03-29 13:23:36 Error: Call to undefined function sendMessageToUid() in D:\phpStudy\PHPTutorial\WWW\talkv\php\server.php:77
+Stack trace:
+#0 [internal function]: {closure}(Object(Workerman\Connection\TcpConnection), '{"type":"sendto...')
+#1 D:\phpStudy\PHPTutorial\WWW\talkv\php\workerman\Connection\TcpConnection.php(632): call_user_func(Object(Closure), Object(Workerman\Connection\TcpConnection), '{"type":"sendto...')
+#2 [internal function]: Workerman\Connection\TcpConnection->baseRead(Resource id #29)
+#3 D:\phpStudy\PHPTutorial\WWW\talkv\php\workerman\Events\Select.php(286): call_user_func_array(Array, Array)
+#4 D:\phpStudy\PHPTutorial\WWW\talkv\php\workerman\Worker.php(856): Workerman\Events\Select->loop()
+#5 D:\phpStudy\PHPTutorial\WWW\talkv\php\workerman\Worker.php(473): Workerman\Worker->run()
+#6 D:\phpStudy\PHPTutorial\WWW\talkv\php\workerman\Worker.php(382): Workerman\Worker::runAllWorkers()
+#7 D:\phpStudy\PHPTutorial\WWW\talkv\php\server.php(132): Workerman\Worker::runAll()
+#8 {main}
+2018-03-29 13:26:39 Error: Call to a member function query() on null in D:\phpStudy\PHPTutorial\WWW\talkv\php\server.php:78
+Stack trace:
+#0 [internal function]: {closure}(Object(Workerman\Connection\TcpConnection), '{"type":"sendto...')
+#1 D:\phpStudy\PHPTutorial\WWW\talkv\php\workerman\Connection\TcpConnection.php(632): call_user_func(Object(Closure), Object(Workerman\Connection\TcpConnection), '{"type":"sendto...')
+#2 [internal function]: Workerman\Connection\TcpConnection->baseRead(Resource id #25)
+#3 D:\phpStudy\PHPTutorial\WWW\talkv\php\workerman\Events\Select.php(286): call_user_func_array(Array, Array)
+#4 D:\phpStudy\PHPTutorial\WWW\talkv\php\workerman\Worker.php(856): Workerman\Events\Select->loop()
+#5 D:\phpStudy\PHPTutorial\WWW\talkv\php\workerman\Worker.php(473): Workerman\Worker->run()
+#6 D:\phpStudy\PHPTutorial\WWW\talkv\php\workerman\Worker.php(382): Workerman\Worker::runAllWorkers()
+#7 D:\phpStudy\PHPTutorial\WWW\talkv\php\server.php(132): Workerman\Worker::runAll()
+#8 {main}

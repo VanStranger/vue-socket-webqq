@@ -1,0 +1,43 @@
+*{
+    margin:0;
+    padding:0;
+    list-style: none;
+    text-decoration: none;
+}
+html,body{
+    height:100%;
+}
+.clearfix{overflow:hidden;_zoom:1;}
+body{font-family:"Microsoft YaHei";overflow: auto;}
+.none{display: none !important;}
+
+#baohe-btns{
+    position: absolute;
+    top:0;
+    right: 0;
+}
+#ctr{
+    height:25px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    z-index: 3;
+}
+.ctrli{
+    float: left;
+}
+.ctrbtn{
+    display: block;
+    height:16px;
+    min-width: 16px;
+    margin:4px;
+    text-decoration: none;
+    margin: 7px 5px 7px 0;
+    padding: 0 2px;
+}
+.left{
+    float: left;
+}
+.right{
+    float:right;
+}
