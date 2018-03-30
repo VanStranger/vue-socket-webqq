@@ -1,6 +1,6 @@
-# yor365v
+# vue-socket-webqq
 
-> yor365
+> webqq
 
 ## Build Setup
 
