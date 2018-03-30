@@ -37,21 +37,16 @@
             state.ws=socket;
         },
         addMessages(state,message){
-            //对象属性变化不更新视图，舍弃。
-            // var withid=message.withid;
-            // delete message.withid;
-            // if(state.messages[withid]){
-            //     var messages=state.messages[withid]
-            //     messages.push(message);
-            //     var newobj={};
-            //     newobj[withid]=messages;
-            //     Object.assign(state.messages,newobj);
-            // }else{
-            //     var newobj={};
-            //     newobj[withid]=message;
-            //     Object.assign(state.messages,newobj);
-            // }
-            state.messages.push(message);
+            // 对象属性变化不更新视图，舍弃。
+            var twithid=message.withid;
+            delete message.withid;
+            for(let i=0,len=state.messages.length;i<len;i++){
+                if(state.messages[i].widthid==twithid){
+                    state.messages[i].data.push(message);
+                    return;
+                }
+            }
+            state.messages.push({"withid":twithid,"data":[message]});
         },
     };
     var actions={

@@ -33,11 +33,14 @@
                             <div class="newsdiv" >
                               <div v-for="message in messages">
                                 <div v-if="message.withid==talkto.friendid">
-                                  <div class='message' v-if="message.type=='come'">
-                                    <img :src="'static/img/' + talkto.photo " class='anotherphoto' /><div class='saymessage'>你好！</div ><p class='saytime'>刚才</p>
-                                  </div>
-                                  <div class='message' v-else-if="message.type=='go'">
-                                    <img :src="'static/img/' + user.photo " class='myphoto' /><div class='replymessage'>{{message.message}}</div><p class='replytime'>{{message.create_time}}</p>
+                                  <div v-for="msg in message.data">
+                                    
+                                    <div class='message' v-if="msg.type=='come'">
+                                      <img :src="'static/img/' + talkto.photo " class='anotherphoto' /><div class='saymessage'>{{msg.message}}</div ><p class='saytime'>{{datetime("mm-dd h:i:s",msg.create_time*1000)}}</p>
+                                    </div>
+                                    <div class='message' v-else-if="msg.type=='go'">
+                                      <img :src="'static/img/' + user.photo " class='myphoto' /><div class='replymessage'>{{msg.message}}</div><p class='replytime'>{{datetime("mm-dd h:i:s",msg.create_time*1000)}}</p>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
@@ -99,6 +102,12 @@ export default {
     },
     
   },
+  watch:{
+    messages(newvalue,oldvalue){
+      console.info({"changed":newvalue});
+    },
+    deep:true
+  },
   beforeMount(){
     console.log(this.user);
     var w=window.innerWidth|| document.documentElement.clientWidth|| document.body.clientWidth;
@@ -114,15 +123,29 @@ export default {
     }
   },
   methods:{
+    datetime(fmt,time){   
+      let date=new Date(time); 
+      var o = {   
+        "m+" : date.getMonth()+1,                 //月份   
+        "d+" : date.getDate(),                    //日   
+        "h+" : date.getHours(),                   //小时   
+        "i+" : date.getMinutes(),                 //分   
+        "s+" : date.getSeconds(),                 //秒   
+        "q+" : Math.floor((date.getMonth()+3)/3), //季度   
+        "S"  : date.getMilliseconds()             //毫秒   
+      };  
+      if(/(y+)/.test(fmt))   
+        fmt=fmt.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length));   
+      for(var k in o)   
+        if(new RegExp("("+ k +")").test(fmt))   
+      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+      return fmt;   
+    } ,
     closetalktos:function(){
       this.$store.commit("deltalkto");
     },
     closetalkto:function(id){
       this.$store.commit("deltalkto",id);
-    },
-    changemsg:function(){
-      console.log(this.$refs.editdiv);
-      this.msg = this.$refs.editdiv[0].innerHTML;
     },
     sendmsg:function(){
       console.log(this.ws);

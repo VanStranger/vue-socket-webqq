@@ -4,6 +4,7 @@
         <div class="friendlicont">
             <div class="friendpho">
                 <img :src='"/static/img/" + friend.photo ' alt="" class="friendphoimg">
+                <span class="friendnewsnum">0</span>
             </div>
             <p class="friendname">{{friend.username}}</p>
             <p class="friendinfo">{{friend.userinfo}}</p>
