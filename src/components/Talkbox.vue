@@ -30,8 +30,18 @@
                     </div>
                     <div class="talkbox-body">
                         <div class="talk-bodydiv">
-                            <div class="newsdiv" >
-                              <div v-for="message in messages">
+                            <div class="newsdiv" :uid="talkto.friendid">
+                              <div v-if="messages['u'+talkto.friendid]">
+                                <div v-for="message in messages['u' + talkto.friendid]">
+                                      <div class='message' v-if="message.type=='come'">
+                                        <img :src="'static/img/' + talkto.photo " class='anotherphoto' /><div class='saymessage'>{{message.message}}</div ><p class='saytime'>{{datetime("mm-dd h:i:s",message.create_time*1000)}}</p>
+                                      </div>
+                                      <div class='message' v-else-if="message.type=='go'">
+                                        <img :src="'static/img/' + user.photo " class='myphoto' /><div class='replymessage'>{{message.message}}</div><p class='replytime'>{{datetime("mm-dd h:i:s",message.create_time*1000)}}</p>
+                                      </div>
+                                </div>
+                              </div>
+                              <!-- <div v-for="message in messages">
                                 <div v-if="message.withid==talkto.friendid">
                                   <div v-for="msg in message.data">
                                     
@@ -44,6 +54,7 @@
                                   </div>
                                 </div>
                               </div>
+                               -->
 
 
 
@@ -95,18 +106,12 @@ export default {
       "ws",
       "talktoid",
       "user",
-      "messages"
+      "messages",
     ]),
     talktos:function(){
       return this.$store.getters.talkto;
     },
     
-  },
-  watch:{
-    messages(newvalue,oldvalue){
-      console.info({"changed":newvalue});
-    },
-    deep:true
   },
   beforeMount(){
     console.log(this.user);
@@ -120,6 +125,7 @@ export default {
   data () {
     return {
       msg:"",
+      name1:"l"
     }
   },
   methods:{
@@ -151,8 +157,9 @@ export default {
       console.log(this.ws);
       let that=this;
       let msg=that.$refs.editdiv[0].innerHTML;
-      this.$store.commit("addMessages",{"withid":that.talktoid,"type":"go","message":msg,"create_time":Math.floor(new Date().getTime()/1000),"readed":0});
-      this.ws.send(JSON.stringify({"type":"sendtoUid","toid":that.talktoid,"fromid":this.user.id,"message":that.$refs.editdiv[0].innerHTML}));
+      let create_time=Math.floor(new Date().getTime()/1000);
+      this.$store.commit("addMessages",{"withid":that.talktoid,"type":"go","message":msg,"create_time":create_time,"readed":0});
+      this.ws.send(JSON.stringify({"type":"sendtoUid","toid":that.talktoid,"fromid":this.user.id,"message":that.$refs.editdiv[0].innerHTML,"create_time":Math.floor(new Date().getTime()/1000)}));
       that.$refs.editdiv[0].innerHTML="";
       console.log(this.messages);
     }

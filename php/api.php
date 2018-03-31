@@ -63,6 +63,17 @@
                 echo json_encode(['state'=>0]);
             }
             break;
+        case "getLeftMsgs":
+            $page=intval($_POST['page'])??1;
+            $size=intval($_POST['size'])??20;
+            $withUid=intval($_POST['withUid'])??0;
+            if($withUid){
+                $msgs=$db->query("SELECT fromid,toid,message,readed,create_time from talk where readed=0 and ((fromid=? and toid=?) or (fromid=? and toid=?))",[$_COOKIE['UserID'],$withUid,$withUid,$_COOKIE['UserID']]);
+                echo json_encode(['state'=>1,"data"=>$msgs]);
+            }else{
+                echo json_encode(['state'=>0]);
+            }
+            break;
         default:
             # code...
             break;

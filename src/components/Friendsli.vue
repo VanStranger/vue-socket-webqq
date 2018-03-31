@@ -4,7 +4,7 @@
         <div class="friendlicont">
             <div class="friendpho">
                 <img :src='"/static/img/" + friend.photo ' alt="" class="friendphoimg">
-                <span class="friendnewsnum">0</span>
+                <span class="friendnewsnum" v-if="newMsgNums">{{newMsgNums}}</span>
             </div>
             <p class="friendname">{{friend.username}}</p>
             <p class="friendinfo">{{friend.userinfo}}</p>
@@ -12,20 +12,42 @@
     </li>
 </template>
 <script>
+    import {mapState} from 'vuex'
     export default {
         name:"Friendsli",
         props:['friend'],
+        computed:{
+            ...mapState([
+                "messages",
+            ]),
+            newMsgNums:function(){
+                console.log(this.friend);
+                console.log(this.messages["u"+this.friend.friendid]);
+                if(!this.messages["u"+this.friend.friendid]){
+                    return 0;
+                }
+                var num=0;
+                for(var i=0,len=this.messages["u"+this.friend.friendid].length;i<len;i++){
+                    if(this.messages["u"+this.friend.friendid][i].type=="come" && this.messages["u"+this.friend.friendid][i].readed==0){
+                        num++;
+                    }
+                }
+                return num;
+            },
+        },
         data(){
             return {
                 userid:0,
                 photo:"",
                 username:"",
-                userinfo:""
+                userinfo:"",
             }
         },
         methods:{
             addtalkto:function(){
                 this.$store.commit("addtalkto",this.friend);
+                this.$store.commit("readMessages",this.friend.friendid);
+
                 console.log(this.$store);
                 console.log(this.$store.getters.talkto);
             },

@@ -1,6 +1,6 @@
 export default {
     talkto:function(state){
-        return state.talkto;
+        return state.talktos;
     },
     draging:function(state){
         return state.draging;

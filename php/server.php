@@ -59,8 +59,6 @@ $worker->onMessage = function($connection, $data)use($worker)
         case 'login':
             if($json['uid']){
                 echo $json['uid'];
-                $person=$db->query("select * from user where id=?",[$json['uid']]);
-                var_dump($person);
             	$connection->uid = $json['uid'];
 		       /* 保存uid到connection的映射，这样可以方便的通过uid查找connection，
 		        * 实现针对特定uid推送数据
@@ -74,20 +72,28 @@ $worker->onMessage = function($connection, $data)use($worker)
             break;
         case 'sendtoUid':
             if($json['toid'] && $json['message'] && $json['fromid']){
-                sendMessageToUid($json['toid'],json_encode(["type"=>"newmessage","fromid"=>$json['fromid'],"message"=>$json['message']]));
-                $db->query("INSERT INTO talk (fromid,toid,message,create_time,readed) values(?,?,?,?,?)",[$json['fromid'],$json['toid'],$json['message'],time(),0]);
+                $num=$db->query("INSERT INTO talk (fromid,toid,message,create_time,readed) values(?,?,?,?,?)",[$json['fromid'],$json['toid'],$json['message'],($json['create_time']??time()),0]);
+                if($num==1){
+                    $msgid=$db->lastInsertId();
+                }else{
+                    $msgid=0;
+                }
+                sendMessageToUid($json['toid'],json_encode(["type"=>"newmessage","fromid"=>$json['fromid'],"message"=>$json['message'],"msgid"=>$msgid]));
             }
             break;
         case "readmessage":
-            if($json['fromid'] && $json['toid'] && $json['msgid']){
-                sendMessageToUid($json['fromid'],json_encode(["type"=>"readedmessage","toid"=>$json['toid'],"msgid"=>$json['msgid']]));
-                $message=$db->query("SELECT toid from talk where id=?",[$json['msgid']]);
-                if($message && $message[0]['toid']==$json['toid']){
-                    $db->query("UPDATE talk set readed=1");
+            if($json['fromid'] && $json['toid'] && $json['msgids']){
+                sendMessageToUid($json['fromid'],json_encode(["type"=>"readedmessage","toid"=>$json['toid'],"msgids"=>json_encode($json['msgids'])]));
+                for($i=0,$len=count($json['msgids']);$i<$len;$i++){
+                    $message=$db->query("SELECT toid from talk where id=?",[$json['msgids'][$i]]);
+                    if($message && $message[0]['toid']==$json['toid']){
+                        $db->query("UPDATE talk set readed=1 where id=?",[$json['msgids'][$i]]);
+                    }
                 }
             }
+            break;
         default:
-            # code...
+            
             break;
     }
     

@@ -17,7 +17,7 @@
     <div id="search">
       <div id="searchbg"></div>
       <div id="searchcont">
-        <input type="text" id="searchinput" value="搜索联系人，讨论组">
+        <input type="text" id="searchinput" placeholder ="搜索联系人，讨论组">
         <a href="###" id="searchbtn"><i class="icon-search"></i></a>
       </div>
     </div>
@@ -85,7 +85,8 @@ export default {
               var obj=JSON.parse(data.data);
               if(obj.type=="newmessage"){
                 that.$refs.audio.play();
-                that.$store.commit("addMessages",{"withid":obj.fromid,"type":"come","message":obj.message,"create_time":Math.floor(new Date().getTime()/1000),"readed":0})
+                let create_time=Math.floor(new Date().getTime()/1000);
+                that.$store.commit("addMessages",{"withid":obj.fromid,"type":"come","message":obj.message,"create_time":create_time,"readed":0})
               }
               ws.send("pong");
             }
@@ -133,7 +134,7 @@ export default {
       this.$store.commit("setWs",0);
       // router.push("/login");
       window.location.reload();
-    }
+    },
   },
   components:{
     Talkbox,FriendsGroup
@@ -146,7 +147,7 @@ export default {
 #baohe{
   width:280px;
   height:568px;
-  background: url("/static/img/bbg1.jpg");
+  background: url("/static/img/bbg2.jpg");
   background-size: cover;
   position: absolute;
   top:50px;

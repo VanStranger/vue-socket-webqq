@@ -8,11 +8,12 @@ Vue.use(Vuex)
 var store=new Vuex.Store({
     state:{
         user:null,
-        talkto:[],
+        talktos:[],
         talktoid:0,
         draging:0,
         ws:0,
-        messages:[],
+        messages:{},
+        ceshiobj:{},
     },
     mutations,actions,
     getters:getters
