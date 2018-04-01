@@ -1,5 +1,6 @@
 <template>
   <div>
+  <Search></Search>
   <div id="baohe" v-bind:style="{top:baoheTop,left:baoheLeft}">
     <div id="header">
       <div id="headerbg"></div>
@@ -46,6 +47,7 @@ import vcookie from "vcookie";
 import router from "../router/index.js"
 import {mapState} from "vuex"
 import Talkbox from  "../components/Talkbox.vue"
+import Search from "../components/Search.vue"
 import FriendsGroup from "../components/FriendsGroup.vue"
 export default {
   name: 'Index',
@@ -137,7 +139,7 @@ export default {
     },
   },
   components:{
-    Talkbox,FriendsGroup
+    Talkbox,FriendsGroup,Search
   }
 }
 </script>

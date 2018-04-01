@@ -10,7 +10,10 @@ html,body{
 .clearfix{overflow:hidden;_zoom:1;}
 body{font-family:"Microsoft YaHei";overflow: auto;}
 .none{display: none !important;}
-
+.center{
+    text-align: center;
+    font-size: 0;
+}
 #baohe-btns{
     position: absolute;
     top:0;
